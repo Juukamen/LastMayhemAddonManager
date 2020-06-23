@@ -28,64 +28,65 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.groupBox1.SuspendLayout();
+            this.gb_wow_installation = new System.Windows.Forms.GroupBox();
+            this.rb_classic = new System.Windows.Forms.RadioButton();
+            this.rb_retail = new System.Windows.Forms.RadioButton();
+            this.gb_wow_installation.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // gb_wow_installation
             // 
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(776, 115);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "World of Warcraft";
+            this.gb_wow_installation.Controls.Add(this.rb_classic);
+            this.gb_wow_installation.Controls.Add(this.rb_retail);
+            this.gb_wow_installation.Location = new System.Drawing.Point(12, 12);
+            this.gb_wow_installation.Name = "gb_wow_installation";
+            this.gb_wow_installation.Size = new System.Drawing.Size(776, 117);
+            this.gb_wow_installation.TabIndex = 0;
+            this.gb_wow_installation.TabStop = false;
+            this.gb_wow_installation.Text = "World of Warcraft";
             // 
-            // radioButton2
+            // rb_classic
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(20, 79);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(89, 29);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Classic";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rb_classic.AutoSize = true;
+            this.rb_classic.Location = new System.Drawing.Point(20, 79);
+            this.rb_classic.Name = "rb_classic";
+            this.rb_classic.Size = new System.Drawing.Size(89, 29);
+            this.rb_classic.TabIndex = 1;
+            this.rb_classic.Text = "Classic";
+            this.rb_classic.UseVisualStyleBackColor = true;
+            this.rb_classic.CheckedChanged += new System.EventHandler(this.WowClientCheckedChanged);
             // 
-            // radioButton1
+            // rb_retail
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(20, 43);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(80, 29);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Retail";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rb_retail.AutoSize = true;
+            this.rb_retail.Location = new System.Drawing.Point(20, 43);
+            this.rb_retail.Name = "rb_retail";
+            this.rb_retail.Size = new System.Drawing.Size(80, 29);
+            this.rb_retail.TabIndex = 0;
+            this.rb_retail.TabStop = true;
+            this.rb_retail.Text = "Retail";
+            this.rb_retail.UseVisualStyleBackColor = true;
+            this.rb_retail.CheckedChanged += new System.EventHandler(this.WowClientCheckedChanged);
             // 
-            // Form1
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.groupBox1);
-            this.Name = "Form1";
+            this.Controls.Add(this.gb_wow_installation);
+            this.Name = "Main";
             this.Text = "Form1";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gb_wow_installation.ResumeLayout(false);
+            this.gb_wow_installation.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.GroupBox gb_wow_installation;
+        private System.Windows.Forms.RadioButton rb_classic;
+        private System.Windows.Forms.RadioButton rb_retail;
     }
 }
 
