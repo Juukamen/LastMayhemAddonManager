@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace LastTryMayhemAddonManager
 {
@@ -15,6 +17,7 @@ namespace LastTryMayhemAddonManager
         #region Members
         private Dictionary<RadioButton, DirectoryInfo> installations;
         private List<ISourceConfiguration> sources;
+        private FileVersionInfo versionInfo;
         #endregion //Members
 
         #region Constructors
@@ -35,12 +38,13 @@ namespace LastTryMayhemAddonManager
             {
                 DirectoryInfo dir = this.installations[rb];
 
-                this.gb_wow_installation.Text = "World of Warcraft " + rb.Text + ": " + dir.FullName;
+                this.versionInfo = FileVersionInfo.GetVersionInfo(dir.FullName + "\\wow" + (rb.Text == this.rb_classic.Text ? "classic" : "") + ".exe");
+                this.gb_wow_installation.Text = "World of Warcraft " + rb.Text + " (" + this.versionInfo.FileVersion + "): " + dir.FullName;
                 this.ListInstalledAddons(dir);
+                
             }
         }
         #endregion //Events
-
         private void InitializeSources()
         {
             this.sources = new List<ISourceConfiguration>();
