@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.gb_wow_installation = new System.Windows.Forms.GroupBox();
+            this.lbl_path_dynamic = new System.Windows.Forms.Label();
+            this.lbl_path_static = new System.Windows.Forms.Label();
+            this.lbl_interface_static = new System.Windows.Forms.Label();
+            this.lbl_interface_dynamic = new System.Windows.Forms.Label();
             this.rb_classic = new System.Windows.Forms.RadioButton();
             this.rb_retail = new System.Windows.Forms.RadioButton();
             this.gb_myaddons = new System.Windows.Forms.GroupBox();
             this.pnl_addonWrapper = new System.Windows.Forms.Panel();
-            this.lbl_interface_dynamic = new System.Windows.Forms.Label();
-            this.lbl_interface_static = new System.Windows.Forms.Label();
-            this.lbl_path_static = new System.Windows.Forms.Label();
-            this.lbl_path_dynamic = new System.Windows.Forms.Label();
             this.gb_wow_installation.SuspendLayout();
             this.gb_myaddons.SuspendLayout();
             this.SuspendLayout();
@@ -55,6 +55,44 @@
             this.gb_wow_installation.TabIndex = 0;
             this.gb_wow_installation.TabStop = false;
             this.gb_wow_installation.Text = "World of Warcraft";
+            // 
+            // lbl_path_dynamic
+            // 
+            this.lbl_path_dynamic.AutoSize = true;
+            this.lbl_path_dynamic.Location = new System.Drawing.Point(280, 81);
+            this.lbl_path_dynamic.Name = "lbl_path_dynamic";
+            this.lbl_path_dynamic.Size = new System.Drawing.Size(62, 25);
+            this.lbl_path_dynamic.TabIndex = 2;
+            this.lbl_path_dynamic.Text = "-path-";
+            // 
+            // lbl_path_static
+            // 
+            this.lbl_path_static.AutoSize = true;
+            this.lbl_path_static.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_path_static.Location = new System.Drawing.Point(156, 81);
+            this.lbl_path_static.Name = "lbl_path_static";
+            this.lbl_path_static.Size = new System.Drawing.Size(56, 25);
+            this.lbl_path_static.TabIndex = 3;
+            this.lbl_path_static.Text = "Path:";
+            // 
+            // lbl_interface_static
+            // 
+            this.lbl_interface_static.AutoSize = true;
+            this.lbl_interface_static.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_interface_static.Location = new System.Drawing.Point(156, 43);
+            this.lbl_interface_static.Name = "lbl_interface_static";
+            this.lbl_interface_static.Size = new System.Drawing.Size(118, 25);
+            this.lbl_interface_static.TabIndex = 3;
+            this.lbl_interface_static.Text = "Interface ID:";
+            // 
+            // lbl_interface_dynamic
+            // 
+            this.lbl_interface_dynamic.AutoSize = true;
+            this.lbl_interface_dynamic.Location = new System.Drawing.Point(280, 43);
+            this.lbl_interface_dynamic.Name = "lbl_interface_dynamic";
+            this.lbl_interface_dynamic.Size = new System.Drawing.Size(93, 25);
+            this.lbl_interface_dynamic.TabIndex = 2;
+            this.lbl_interface_dynamic.Text = "-interface-";
             // 
             // rb_classic
             // 
@@ -84,7 +122,7 @@
             this.gb_myaddons.Controls.Add(this.pnl_addonWrapper);
             this.gb_myaddons.Location = new System.Drawing.Point(12, 134);
             this.gb_myaddons.Name = "gb_myaddons";
-            this.gb_myaddons.Size = new System.Drawing.Size(1234, 731);
+            this.gb_myaddons.Size = new System.Drawing.Size(1234, 822);
             this.gb_myaddons.TabIndex = 1;
             this.gb_myaddons.TabStop = false;
             this.gb_myaddons.Text = "My Addons";
@@ -96,44 +134,6 @@
             this.pnl_addonWrapper.Name = "pnl_addonWrapper";
             this.pnl_addonWrapper.Size = new System.Drawing.Size(1222, 785);
             this.pnl_addonWrapper.TabIndex = 0;
-            // 
-            // lbl_interface_dynamic
-            // 
-            this.lbl_interface_dynamic.AutoSize = true;
-            this.lbl_interface_dynamic.Location = new System.Drawing.Point(280, 43);
-            this.lbl_interface_dynamic.Name = "lbl_interface_dynamic";
-            this.lbl_interface_dynamic.Size = new System.Drawing.Size(93, 25);
-            this.lbl_interface_dynamic.TabIndex = 2;
-            this.lbl_interface_dynamic.Text = "-interface-";
-            // 
-            // lbl_interface_static
-            // 
-            this.lbl_interface_static.AutoSize = true;
-            this.lbl_interface_static.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_interface_static.Location = new System.Drawing.Point(156, 43);
-            this.lbl_interface_static.Name = "lbl_interface_static";
-            this.lbl_interface_static.Size = new System.Drawing.Size(118, 25);
-            this.lbl_interface_static.TabIndex = 3;
-            this.lbl_interface_static.Text = "Interface ID:";
-            // 
-            // lbl_path_static
-            // 
-            this.lbl_path_static.AutoSize = true;
-            this.lbl_path_static.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_path_static.Location = new System.Drawing.Point(156, 81);
-            this.lbl_path_static.Name = "lbl_path_static";
-            this.lbl_path_static.Size = new System.Drawing.Size(56, 25);
-            this.lbl_path_static.TabIndex = 3;
-            this.lbl_path_static.Text = "Path:";
-            // 
-            // lbl_path_dynamic
-            // 
-            this.lbl_path_dynamic.AutoSize = true;
-            this.lbl_path_dynamic.Location = new System.Drawing.Point(280, 81);
-            this.lbl_path_dynamic.Name = "lbl_path_dynamic";
-            this.lbl_path_dynamic.Size = new System.Drawing.Size(62, 25);
-            this.lbl_path_dynamic.TabIndex = 2;
-            this.lbl_path_dynamic.Text = "-path-";
             // 
             // Main
             // 
