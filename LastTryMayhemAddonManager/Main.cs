@@ -3,12 +3,12 @@ using LastTryMayhemAddonManager.Data.Configurations;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace LastTryMayhemAddonManager
 {
@@ -18,6 +18,7 @@ namespace LastTryMayhemAddonManager
         private Dictionary<RadioButton, DirectoryInfo> installations;
         private List<ISourceConfiguration> sources;
         private FileVersionInfo versionInfo;
+        private int[] interfaceNumbers;
         #endregion //Members
 
         #region Constructors
@@ -39,9 +40,13 @@ namespace LastTryMayhemAddonManager
                 DirectoryInfo dir = this.installations[rb];
 
                 this.versionInfo = FileVersionInfo.GetVersionInfo(dir.FullName + "\\wow" + (rb.Text == this.rb_classic.Text ? "classic" : "") + ".exe");
-                this.gb_wow_installation.Text = "World of Warcraft " + rb.Text + " (" + this.versionInfo.FileVersion + "): " + dir.FullName;
+                this.GetInterfaceNumber(dir);
+
+                this.gb_wow_installation.Text = "World of Warcraft " + rb.Text + " (" + this.versionInfo.FileVersion + " @ " + string.Join(", ", this.interfaceNumbers) + "): " + dir.FullName;
 
                 this.ListInstalledAddons(dir);
+
+                var x = this.GetComposedInterfaceNumbersFromVersion();
             }
         }
         #endregion //Events
@@ -90,7 +95,46 @@ namespace LastTryMayhemAddonManager
                 addonsDir.Create();
             }
 
+            
             this.UpdateAddonList(addonsDir.GetDirectories());
+        }
+
+        private void GetInterfaceNumber(DirectoryInfo dir)
+        {
+            int[] composed = this.GetComposedInterfaceNumbersFromVersion();
+
+            FileInfo configWtfFile = new FileInfo(dir.FullName + "\\WTF\\config.wtf");
+            if (configWtfFile.Exists)
+            {
+                StreamReader sr = new StreamReader(configWtfFile.FullName);
+                string line = null;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    if(Regex.Match(line, "^set lastAddonVersion", RegexOptions.IgnoreCase).Success)
+                    {
+                        int value = int.Parse(line.Substring(22, line.Length - 23));
+                        if(composed.Contains(value))
+                        {
+                            this.interfaceNumbers = new int[] { value };
+                            return;
+                        }
+                    }
+                }
+                sr.Close();
+            }
+            this.interfaceNumbers = composed;
+        }
+
+        private int[] GetComposedInterfaceNumbersFromVersion()
+        {
+            int min = int.Parse(this.versionInfo.FileMajorPart.ToString() + this.versionInfo.FileMinorPart.ToString().PadLeft(2, '0') + "00");
+            int max = int.Parse(this.versionInfo.FileMajorPart.ToString() + this.versionInfo.FileMinorPart.ToString().PadLeft(2, '0') + this.versionInfo.FileBuildPart.ToString().PadLeft(2, '0'));
+            List<int> buffer = new List<int>();
+            for(int i=min; i<=max; i++)
+            {
+                buffer.Add(i);
+            }
+            return buffer.ToArray();
         }
 
         private void UpdateAddonList(DirectoryInfo[] directories)
@@ -99,44 +143,44 @@ namespace LastTryMayhemAddonManager
             parent.Controls.Clear();
             Dictionary<int, List<Control>> components = new Dictionary<int, List<Control>>();
 
-            Label h1 = new Label();
-            h1.Text = "Addon";
-            h1.Font = new Font(h1.Font, FontStyle.Bold);
-            h1.Location = new Point(0, 0);
-            h1.Size = h1.PreferredSize;
+            Label header1 = new Label();
+            header1.Text = "Addon";
+            header1.Font = new Font(header1.Font, FontStyle.Bold);
+            header1.Location = new Point(0, 0);
+            header1.Size = header1.PreferredSize;
 
-            Label h2 = new Label();
-            h2.Text = "Version";
-            h2.Font = new Font(h2.Font, FontStyle.Bold);
-            h2.Location = new Point(0, 0);
-            h2.Size = h2.PreferredSize;
+            Label header2 = new Label();
+            header2.Text = "Version";
+            header2.Font = new Font(header2.Font, FontStyle.Bold);
+            header2.Location = new Point(0, 0);
+            header2.Size = header2.PreferredSize;
 
             components.Add(0, new List<Control>());
             components.Add(1, new List<Control>());
 
-            components[0].Add(h1);
-            components[1].Add(h2);
+            components[0].Add(header1);
+            components[1].Add(header2);
 
-            parent.Controls.Add(h1);
-            parent.Controls.Add(h2);
+            parent.Controls.Add(header1);
+            parent.Controls.Add(header2);
             foreach (DirectoryInfo dir in directories)
             {
-                Label l1 = new Label();
-                l1.Text = dir.Name;
-                l1.Location = new Point(0, 0);
-                l1.Size = l1.PreferredSize;
+                Label column1 = new Label();
+                column1.Text = dir.Name;
+                column1.Location = new Point(0, 0);
+                column1.Size = column1.PreferredSize;
 
-                Label l2 = new Label();
-                l2.Text = "Pre-Installed";
-                l2.ForeColor = Color.Red;
-                l2.Location = new Point(0, 0);
-                l2.Size = l2.PreferredSize;
+                Label column2 = new Label();
+                column2.Text = "Pre-Installed";
+                column2.ForeColor = Color.Red;
+                column2.Location = new Point(0, 0);
+                column2.Size = column2.PreferredSize;
 
-                parent.Controls.Add(l1);
-                parent.Controls.Add(l2);
+                parent.Controls.Add(column1);
+                parent.Controls.Add(column2);
 
-                components[0].Add(l1);
-                components[1].Add(l2);
+                components[0].Add(column1);
+                components[1].Add(column2);
             }
 
             int xStart = 5;
