@@ -14,6 +14,10 @@ namespace LastTryMayhemAddonManager
 {
     public partial class Main : Form
     {
+        #region Constants
+        private const string Title = "Last Try Mayhem Addon Manager";
+        #endregion //Constants
+
         #region Members
         private Dictionary<RadioButton, DirectoryInfo> installations;
         private List<ISourceConfiguration> sources;
@@ -25,6 +29,7 @@ namespace LastTryMayhemAddonManager
         public Main()
         {
             InitializeComponent();
+            this.Text = Main.Title;
             this.InitializeSources();
             this.LoadWowClients();
         }
@@ -42,7 +47,9 @@ namespace LastTryMayhemAddonManager
                 this.versionInfo = FileVersionInfo.GetVersionInfo(dir.FullName + "\\wow" + (rb.Text == this.rb_classic.Text ? "classic" : "") + ".exe");
                 this.GetInterfaceNumber(dir);
 
-                this.gb_wow_installation.Text = "World of Warcraft " + rb.Text + " (" + this.versionInfo.FileVersion + " @ " + string.Join(", ", this.interfaceNumbers) + "): " + dir.FullName;
+                this.Text = Main.Title + " (World of Warcraft " + rb.Text + " - " + this.versionInfo.FileVersion + ")";
+                this.lbl_interface_dynamic.Text = string.Join(", ", this.interfaceNumbers);
+                this.lbl_path_dynamic.Text = dir.FullName;
 
                 this.ListInstalledAddons(dir);
 
