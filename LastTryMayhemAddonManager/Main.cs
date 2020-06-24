@@ -1,10 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using LastTryMayhemAddonManager.Data;
+using LastTryMayhemAddonManager.Data.Configurations;
 using Microsoft.Win32;
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace LastTryMayhemAddonManager
 {
@@ -12,48 +14,17 @@ namespace LastTryMayhemAddonManager
     {
         #region Members
         private Dictionary<RadioButton, DirectoryInfo> installations;
+        private List<ISourceConfiguration> sources;
         #endregion //Members
 
         #region Constructors
         public Main()
         {
             InitializeComponent();
+            this.InitializeSources();
             this.LoadWowClients();
         }
         #endregion //Constructors
-
-        #region Public Methods
-        public void LoadWowClients()
-        {
-            string lookup = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Blizzard Entertainment\\World of Warcraft";
-            object value = Registry.GetValue(lookup, "InstallPath", null);
-            if(value == null)
-            {
-                throw new Exception("Cannot find Wow installation path.");
-            }
-
-            DirectoryInfo installationDir = new DirectoryInfo((string)value).Parent;
-            DirectoryInfo retailDir = new DirectoryInfo(installationDir.FullName + "\\_retail_");
-            DirectoryInfo classicDir = new DirectoryInfo(installationDir.FullName + "\\_classic_");
-
-            this.installations = new Dictionary<RadioButton, DirectoryInfo>();
-            this.installations.Add(this.rb_classic, classicDir);
-            this.installations.Add(this.rb_retail, retailDir);
-
-            this.rb_classic.Enabled = classicDir.Exists;
-            this.rb_retail.Enabled = retailDir.Exists;
-
-            if(!this.rb_retail.Enabled)
-            {
-                this.rb_classic.Checked = true;
-                this.rb_retail.Checked = false;
-            }
-            else
-            {
-                this.rb_retail.Checked = true;
-            }
-        }
-        #endregion //Public Methods
 
         #region Private Methods
         #region Events
@@ -69,6 +40,43 @@ namespace LastTryMayhemAddonManager
             }
         }
         #endregion //Events
+
+        private void InitializeSources()
+        {
+            this.sources = new List<ISourceConfiguration>();
+            this.sources.Add(new CurseConfig());
+        }
+
+        private void LoadWowClients()
+        {
+            string lookup = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Blizzard Entertainment\\World of Warcraft";
+            object value = Registry.GetValue(lookup, "InstallPath", null);
+            if (value == null)
+            {
+                throw new Exception("Cannot find Wow installation path.");
+            }
+
+            DirectoryInfo installationDir = new DirectoryInfo((string)value).Parent;
+            DirectoryInfo retailDir = new DirectoryInfo(installationDir.FullName + "\\_retail_");
+            DirectoryInfo classicDir = new DirectoryInfo(installationDir.FullName + "\\_classic_");
+
+            this.installations = new Dictionary<RadioButton, DirectoryInfo>();
+            this.installations.Add(this.rb_classic, classicDir);
+            this.installations.Add(this.rb_retail, retailDir);
+
+            this.rb_classic.Enabled = classicDir.Exists;
+            this.rb_retail.Enabled = retailDir.Exists;
+
+            if (!this.rb_retail.Enabled)
+            {
+                this.rb_classic.Checked = true;
+                this.rb_retail.Checked = false;
+            }
+            else
+            {
+                this.rb_retail.Checked = true;
+            }
+        }
 
         private void ListInstalledAddons(DirectoryInfo dir)
         {
@@ -115,7 +123,8 @@ namespace LastTryMayhemAddonManager
                 l1.Size = l1.PreferredSize;
 
                 Label l2 = new Label();
-                l2.Text = "-ni-";
+                l2.Text = "Pre-Installed";
+                l2.ForeColor = Color.Red;
                 l2.Location = new Point(0, 0);
                 l2.Size = l2.PreferredSize;
 
@@ -140,7 +149,6 @@ namespace LastTryMayhemAddonManager
                     int height = components.Select(x => x.Value[idx].Height).Max();
 
                     control.Location = new Point(xOffset, yOffset);
-
                     yOffset += height;
                 }
 
