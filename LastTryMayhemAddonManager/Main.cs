@@ -40,8 +40,8 @@ namespace LastTryMayhemAddonManager
 
                 this.versionInfo = FileVersionInfo.GetVersionInfo(dir.FullName + "\\wow" + (rb.Text == this.rb_classic.Text ? "classic" : "") + ".exe");
                 this.gb_wow_installation.Text = "World of Warcraft " + rb.Text + " (" + this.versionInfo.FileVersion + "): " + dir.FullName;
+
                 this.ListInstalledAddons(dir);
-                
             }
         }
         #endregion //Events
