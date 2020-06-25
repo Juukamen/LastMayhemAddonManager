@@ -101,9 +101,17 @@ namespace LastTryMayhemAddonManager
             {
                 addonsDir.Create();
             }
-
-            
             this.UpdateAddonList(addonsDir.GetDirectories());
+        }
+
+        private TocData ReadTOC(DirectoryInfo dir)
+        {
+            FileInfo tocFile = new FileInfo(dir.FullName + "\\" + dir.Name + ".toc");
+            if(tocFile.Exists)
+            {
+                return new TocData(tocFile);
+            }
+            return null;
         }
 
         private void GetInterfaceNumber(DirectoryInfo dir)
@@ -162,32 +170,75 @@ namespace LastTryMayhemAddonManager
             header2.Location = new Point(0, 0);
             header2.Size = header2.PreferredSize;
 
+            Label header3 = new Label();
+            header3.Text = "Game State";
+            header3.Font = new Font(header3.Font, FontStyle.Bold);
+            header3.Location = new Point(0, 0);
+            header3.Size = header3.PreferredSize;
+
             components.Add(0, new List<Control>());
             components.Add(1, new List<Control>());
+            components.Add(2, new List<Control>());
 
             components[0].Add(header1);
             components[1].Add(header2);
+            components[2].Add(header3);
 
             parent.Controls.Add(header1);
             parent.Controls.Add(header2);
+            parent.Controls.Add(header3);
             foreach (DirectoryInfo dir in directories)
             {
+                TocData tocData = this.ReadTOC(dir);
+
                 Label column1 = new Label();
                 column1.Text = dir.Name;
                 column1.Location = new Point(0, 0);
+                column1.ForeColor = Color.Orange;
+                column1.Size = column1.PreferredSize;
+                if(tocData.ContainsKey("Title"))
+                {
+                    column1.Text = Regex.Replace(string.Join(", ", tocData["Title"]).Replace("|r", null), "\\|c[0-9A-Fa-f]{8}", "");
+                    column1.ForeColor = Color.Green;
+                }
                 column1.Size = column1.PreferredSize;
 
                 Label column2 = new Label();
-                column2.Text = "Pre-Installed";
+                column2.Text = "Unknown";
                 column2.ForeColor = Color.Red;
+                if(tocData.ContainsKey("Version"))
+                {
+                    column2.Text = string.Join(",", tocData["Version"]);
+                    column2.ForeColor = Color.Green;
+                }
                 column2.Location = new Point(0, 0);
                 column2.Size = column2.PreferredSize;
 
+                Label column3 = new Label();
+                column3.Text = "Unknown";
+                column3.ForeColor = Color.Red;
+                if(tocData.ContainsKey("Interface"))
+                {
+                    int tocInterface = int.Parse(tocData["Interface"][0]);
+
+                    column3.Text = "Ok";
+                    column3.ForeColor = Color.Green;
+                    if(!this.interfaceNumbers.Contains(tocInterface))
+                    {
+                        column3.Text = "Outdated ("+tocInterface+")";
+                        column3.ForeColor = Color.Orange;
+                    }
+                }
+                column3.Location = new Point(0, 0);
+                column3.Size = column3.PreferredSize;
+
                 parent.Controls.Add(column1);
                 parent.Controls.Add(column2);
+                parent.Controls.Add(column3);
 
                 components[0].Add(column1);
                 components[1].Add(column2);
+                components[2].Add(column3);
             }
 
             int xStart = 5;

@@ -143,7 +143,7 @@
             this.Controls.Add(this.gb_myaddons);
             this.Controls.Add(this.gb_wow_installation);
             this.Name = "Main";
-            this.Text = "Form1";
+            this.Text = "--dynamic title-";
             this.gb_wow_installation.ResumeLayout(false);
             this.gb_wow_installation.PerformLayout();
             this.gb_myaddons.ResumeLayout(false);
