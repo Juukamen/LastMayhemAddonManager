@@ -215,7 +215,7 @@ namespace LastTryMayhemAddonManager
                 column1.Size = column1.PreferredSize;
                 if(tocData != null && tocData.ContainsKey("Title"))
                 {
-                    column1.Text = Regex.Replace(string.Join(", ", tocData["Title"]).Replace("|r", null), "\\|c[0-9A-Fa-f]{8}", "");
+                    column1.Text = tocData["Title"];
                     column1.ForeColor = Color.Green;
                 }
                 column1.Size = column1.PreferredSize;
@@ -225,7 +225,7 @@ namespace LastTryMayhemAddonManager
                 column2.ForeColor = Color.Red;
                 if(tocData != null && tocData.ContainsKey("Version"))
                 {
-                    column2.Text = string.Join(",", tocData["Version"]);
+                    column2.Text = tocData["Version"];
                     column2.ForeColor = Color.Green;
                 }
                 column2.Location = new Point(0, 0);
@@ -236,7 +236,7 @@ namespace LastTryMayhemAddonManager
                 column3.ForeColor = Color.Red;
                 if(tocData != null && tocData.ContainsKey("Interface"))
                 {
-                    int tocInterface = int.Parse(tocData["Interface"][0]);
+                    int tocInterface = int.Parse(tocData["Interface"]);
 
                     column3.Text = "Ok";
                     column3.ForeColor = Color.Green;
@@ -249,9 +249,11 @@ namespace LastTryMayhemAddonManager
                 column3.Location = new Point(0, 0);
                 column3.Size = column3.PreferredSize;
 
-                AddonActions column4 = new AddonActions();
+                AddonActions column4 = new AddonActions(dir, tocData);
                 column4.Location = new Point();
                 column4.Size = column4.PreferredSize;
+                column4.OnDelete += Column4_OnDelete;
+                column4.Enable(AddonActions.Buttons.Delete, true);
 
                 parent.Controls.Add(column1);
                 parent.Controls.Add(column2);
@@ -284,6 +286,12 @@ namespace LastTryMayhemAddonManager
                 yOffset = yStart;
                 xOffset += kvp.Value.Select(x => x.Width).Max();
             }
+        }
+
+        private void Column4_OnDelete(DirectoryInfo dir, TocData tocData)
+        {
+            MessageBox.Show("Backup and delete not yet implemented");
+            //throw new NotImplementedException();
         }
         #endregion //Private Methods
     }

@@ -5,11 +5,12 @@ using System.Text.RegularExpressions;
 
 namespace LastTryMayhemAddonManager.Data
 {
-    internal class TocData : Dictionary<string, string[]> 
+    internal class TocData : Dictionary<string, string> 
     {
         #region Constructors
         public TocData(FileInfo file)
         {
+            Dictionary<string, string[]> buffer = new Dictionary<string, string[]>();
             if (file.Exists)
             {
                 StreamReader sr = new StreamReader(file.FullName);
@@ -23,22 +24,26 @@ namespace LastTryMayhemAddonManager.Data
                         if (components.Length >= 2)
                         {
                             string key = components[0].Trim();
-                            List<string> values = new List<string>(components.Select(x => x.Trim()));
+                            List<string> values = new List<string>(components.Select(x => Regex.Replace(x.Trim().Replace("|r", null), "\\|c[0-9A-Fa-f]{8}", "")));
                             values.RemoveAt(0);
 
-                            if(!this.ContainsKey(key))
+                            if(!buffer.ContainsKey(key))
                             {
-                                this.Add(key, values.ToArray());
+                                buffer.Add(key, values.ToArray());
                             }
                             else
                             {
-                                values.AddRange(this[key]);
-                                this[key] = values.ToArray();
+                                values.AddRange(buffer[key]);
+                                buffer[key] = values.ToArray();
                             }
                         }
                     }
                 }
                 sr.Close();
+            }
+            foreach(KeyValuePair<string, string[]> kvp in buffer)
+            {
+                this.Add(kvp.Key, string.Join(", ", kvp.Value));
             }
         }
 

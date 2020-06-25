@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using System;
+using System.IO;
+using LastTryMayhemAddonManager.Data;
 
 namespace LastTryMayhemAddonManager.Controls
 {
@@ -9,10 +11,12 @@ namespace LastTryMayhemAddonManager.Controls
         #region Members
         private Button btn_update;
         private Button btn_delete;
+        private DirectoryInfo dir;
+        private TocData tocData;
         #endregion //Members
 
         #region Delegates
-        public delegate void ClickHandler();
+        public delegate void ClickHandler(DirectoryInfo dir, TocData tocData);
         #endregion //Delegates
 
         #region Events
@@ -28,8 +32,10 @@ namespace LastTryMayhemAddonManager.Controls
         #endregion //Enums
 
         #region Constructors
-        public AddonActions()
+        public AddonActions(DirectoryInfo dir, TocData tocData)
         {
+            this.tocData = tocData;
+            this.dir = dir;
             this.btn_update = new Button();
             this.btn_update.Location = new Point(0, 0);
             this.btn_update.Text = "Update";
@@ -67,12 +73,21 @@ namespace LastTryMayhemAddonManager.Controls
         #region events
         private void Btn_delete_Click(object sender, EventArgs e)
         {
-            this.OnDelete?.Invoke();
+            string name = this.dir.Name;
+            if(this.tocData != null && this.tocData.ContainsKey("Title"))
+            {
+                name = this.tocData["Title"];
+            }
+
+            if (MessageBox.Show("Are you sure you want to delete the addon\n  - " + name + "", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                this.OnDelete?.Invoke(this.dir, this.tocData);
+            }
         }
 
         private void Btn_update_Click(object sender, EventArgs e)
         {
-            this.OnUpdate?.Invoke();
+            this.OnUpdate?.Invoke(this.dir, this.tocData);
         }
         #endregion //Events
         #endregion //Private Methods
