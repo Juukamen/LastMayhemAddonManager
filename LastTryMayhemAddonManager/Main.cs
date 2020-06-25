@@ -1,4 +1,5 @@
-﻿using LastTryMayhemAddonManager.Data;
+﻿using LastTryMayhemAddonManager.Controls;
+using LastTryMayhemAddonManager.Data;
 using LastTryMayhemAddonManager.Data.Configurations;
 using Microsoft.Win32;
 using System;
@@ -176,17 +177,26 @@ namespace LastTryMayhemAddonManager
             header3.Location = new Point(0, 0);
             header3.Size = header3.PreferredSize;
 
+            Label header4 = new Label();
+            header4.Text = "Actions";
+            header4.Font = new Font(header4.Font, FontStyle.Bold);
+            header4.Location = new Point(0, 0);
+            header4.Size = header4.PreferredSize;
+
             components.Add(0, new List<Control>());
             components.Add(1, new List<Control>());
             components.Add(2, new List<Control>());
+            components.Add(3, new List<Control>());
 
             components[0].Add(header1);
             components[1].Add(header2);
             components[2].Add(header3);
+            components[3].Add(header4);
 
             parent.Controls.Add(header1);
             parent.Controls.Add(header2);
             parent.Controls.Add(header3);
+            parent.Controls.Add(header4);
             foreach (DirectoryInfo dir in directories)
             {
                 TocData tocData = this.ReadTOC(dir);
@@ -225,20 +235,26 @@ namespace LastTryMayhemAddonManager
                     column3.ForeColor = Color.Green;
                     if(!this.interfaceNumbers.Contains(tocInterface))
                     {
-                        column3.Text = "Outdated ("+tocInterface+")";
+                        column3.Text = "Outdated (" + tocInterface + ")";
                         column3.ForeColor = Color.Orange;
                     }
                 }
                 column3.Location = new Point(0, 0);
                 column3.Size = column3.PreferredSize;
 
+                AddonActions column4 = new AddonActions();
+                column4.Location = new Point();
+                column4.Size = column4.PreferredSize;
+
                 parent.Controls.Add(column1);
                 parent.Controls.Add(column2);
                 parent.Controls.Add(column3);
+                parent.Controls.Add(column4);
 
                 components[0].Add(column1);
                 components[1].Add(column2);
                 components[2].Add(column3);
+                components[3].Add(column4);
             }
 
             int xStart = 5;

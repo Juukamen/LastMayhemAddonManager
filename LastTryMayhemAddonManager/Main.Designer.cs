@@ -36,6 +36,7 @@
             this.rb_classic = new System.Windows.Forms.RadioButton();
             this.rb_retail = new System.Windows.Forms.RadioButton();
             this.gb_myaddons = new System.Windows.Forms.GroupBox();
+            this.btn_add = new System.Windows.Forms.Button();
             this.pnl_addonWrapper = new System.Windows.Forms.Panel();
             this.gb_wow_installation.SuspendLayout();
             this.gb_myaddons.SuspendLayout();
@@ -119,6 +120,7 @@
             // 
             // gb_myaddons
             // 
+            this.gb_myaddons.Controls.Add(this.btn_add);
             this.gb_myaddons.Controls.Add(this.pnl_addonWrapper);
             this.gb_myaddons.Location = new System.Drawing.Point(12, 134);
             this.gb_myaddons.Name = "gb_myaddons";
@@ -127,12 +129,22 @@
             this.gb_myaddons.TabStop = false;
             this.gb_myaddons.Text = "My Addons";
             // 
+            // btn_add
+            // 
+            this.btn_add.Enabled = false;
+            this.btn_add.Location = new System.Drawing.Point(6, 30);
+            this.btn_add.Name = "btn_add";
+            this.btn_add.Size = new System.Drawing.Size(112, 34);
+            this.btn_add.TabIndex = 0;
+            this.btn_add.Text = "Add";
+            this.btn_add.UseVisualStyleBackColor = true;
+            // 
             // pnl_addonWrapper
             // 
             this.pnl_addonWrapper.AutoScroll = true;
-            this.pnl_addonWrapper.Location = new System.Drawing.Point(6, 30);
+            this.pnl_addonWrapper.Location = new System.Drawing.Point(6, 70);
             this.pnl_addonWrapper.Name = "pnl_addonWrapper";
-            this.pnl_addonWrapper.Size = new System.Drawing.Size(1222, 785);
+            this.pnl_addonWrapper.Size = new System.Drawing.Size(1222, 745);
             this.pnl_addonWrapper.TabIndex = 0;
             // 
             // Main
@@ -162,6 +174,7 @@
         private System.Windows.Forms.Label lbl_path_static;
         private System.Windows.Forms.Label lbl_interface_static;
         private System.Windows.Forms.Label lbl_interface_dynamic;
+        private System.Windows.Forms.Button btn_add;
     }
 }
 
