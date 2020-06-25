@@ -2,7 +2,7 @@
 
 namespace LastTryMayhemAddonManager.Data
 {
-    internal interface ISourceConfiguration
+    public interface ISourceConfiguration
     {
         string BaseUrl();
         object ListAddons(FileVersionInfo versionInfo);

@@ -53,8 +53,15 @@ namespace LastTryMayhemAddonManager
                 this.lbl_path_dynamic.Text = dir.FullName;
 
                 this.ListInstalledAddons(dir);
+            }
+        }
 
-                var x = this.GetComposedInterfaceNumbersFromVersion();
+        private void btn_add_Click(object sender, EventArgs e)
+        {
+            AddonListing form = new AddonListing(this.sources.ToArray());
+            if(form.ShowDialog() == DialogResult.OK)
+            {
+                throw new Exception("Form adding close not implemented yet");
             }
         }
         #endregion //Events
@@ -206,7 +213,7 @@ namespace LastTryMayhemAddonManager
                 column1.Location = new Point(0, 0);
                 column1.ForeColor = Color.Orange;
                 column1.Size = column1.PreferredSize;
-                if(tocData.ContainsKey("Title"))
+                if(tocData != null && tocData.ContainsKey("Title"))
                 {
                     column1.Text = Regex.Replace(string.Join(", ", tocData["Title"]).Replace("|r", null), "\\|c[0-9A-Fa-f]{8}", "");
                     column1.ForeColor = Color.Green;
@@ -216,7 +223,7 @@ namespace LastTryMayhemAddonManager
                 Label column2 = new Label();
                 column2.Text = "Unknown";
                 column2.ForeColor = Color.Red;
-                if(tocData.ContainsKey("Version"))
+                if(tocData != null && tocData.ContainsKey("Version"))
                 {
                     column2.Text = string.Join(",", tocData["Version"]);
                     column2.ForeColor = Color.Green;
@@ -227,7 +234,7 @@ namespace LastTryMayhemAddonManager
                 Label column3 = new Label();
                 column3.Text = "Unknown";
                 column3.ForeColor = Color.Red;
-                if(tocData.ContainsKey("Interface"))
+                if(tocData != null && tocData.ContainsKey("Interface"))
                 {
                     int tocInterface = int.Parse(tocData["Interface"][0]);
 
