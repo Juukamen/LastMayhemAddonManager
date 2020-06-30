@@ -8,9 +8,9 @@ namespace LastTryMayhemAddonManager.Data
     internal class AddonIO
     {
         #region Public Methods
-        public static void Backup(DirectoryInfo directory)
+        public static void Backup(DirectoryInfo directory, DirectoryInfo client)
         {
-            DirectoryInfo exportDir = AddonIO.GetBackupDirectory();
+            DirectoryInfo exportDir = AddonIO.GetBackupDirectory(client);
             FileInfo exportFile = new FileInfo(exportDir.FullName + "\\" + DateTime.Now.ToString("yyyyMMdd HHmmss") + "-" + directory.Name + ".bak");
 
             FileStream fs = new FileStream(exportFile.FullName, FileMode.Create, FileAccess.Write);
@@ -29,9 +29,9 @@ namespace LastTryMayhemAddonManager.Data
         #endregion //Public Methods
 
         #region Private Methods
-        private static DirectoryInfo GetBackupDirectory()
+        private static DirectoryInfo GetBackupDirectory(DirectoryInfo client)
         {
-            DirectoryInfo exportDir = new DirectoryInfo("Backup");
+            DirectoryInfo exportDir = new DirectoryInfo("Backup\\" + client.Name);
             if (!exportDir.Exists)
             {
                 exportDir.Create();

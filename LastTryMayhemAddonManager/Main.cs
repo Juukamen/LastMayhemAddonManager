@@ -40,9 +40,10 @@ namespace LastTryMayhemAddonManager
         #region Events
         private void Column4_OnDelete(DirectoryInfo dir, TocData tocData)
         {
-            AddonIO.Backup(dir);
+            DirectoryInfo client = this.GetActiveClient();
+            AddonIO.Backup(dir, client);
 
-            MessageBox.Show("Delete not yet implemented");
+            MessageBox.Show("Delete/Refresh not yet implemented");
         }
 
         private void WowClientCheckedChanged(object sender, EventArgs e)
@@ -72,6 +73,11 @@ namespace LastTryMayhemAddonManager
             }
         }
         #endregion //Events
+
+        private DirectoryInfo GetActiveClient()
+        {
+            return installations.Where(x => x.Key.Checked).Select(x => x.Value).FirstOrDefault();
+        }
 
         private void InitializeSources()
         {
