@@ -40,7 +40,8 @@ namespace LastTryMayhemAddonManager
         #region Events
         private void btn_restore_Click(object sender, EventArgs e)
         {
-            DirectoryInfo backup = AddonIO.GetBackupDirectory(this.GetActiveClient());
+            DirectoryInfo client = this.GetActiveClient();
+            DirectoryInfo backup = AddonIO.GetBackupDirectory(client);
 
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.InitialDirectory = backup.FullName;
@@ -50,7 +51,12 @@ namespace LastTryMayhemAddonManager
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Restore not yet implemented.");
+                FileInfo file = new FileInfo(ofd.FileName);
+                DirectoryInfo parent = new DirectoryInfo(client.FullName + "\\Interface\\AddOns");
+
+                AddonIO.Restore(file, parent);
+
+                MessageBox.Show("Refresh not yet implemented");
             }
         }
 

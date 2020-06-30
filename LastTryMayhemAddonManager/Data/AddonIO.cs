@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Windows.Forms;
 
 namespace LastTryMayhemAddonManager.Data
 {
@@ -12,6 +13,23 @@ namespace LastTryMayhemAddonManager.Data
         #endregion //Constants
 
         #region Public Methods
+        public static void Restore(FileInfo file, DirectoryInfo addons)
+        {
+            string name = file.Name.Substring(16, file.Name.Length - (file.Extension.Length + 16));
+            DirectoryInfo addon = new DirectoryInfo(addons.FullName + "\\" + name);
+            if(addon.Exists)
+            {
+                addon.Delete(true);
+            }
+            addon.Create();
+            FileStream fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
+            using(ZipArchive zip = new ZipArchive(fs, ZipArchiveMode.Read))
+            {
+                zip.ExtractToDirectory(addon.FullName);
+            }
+            fs.Close();
+        }
+
         public static void Backup(DirectoryInfo directory, DirectoryInfo client)
         {
             DirectoryInfo exportDir = AddonIO.GetBackupDirectory(client);
