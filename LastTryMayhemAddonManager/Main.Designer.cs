@@ -38,6 +38,7 @@
             this.gb_myaddons = new System.Windows.Forms.GroupBox();
             this.btn_add = new System.Windows.Forms.Button();
             this.pnl_addonWrapper = new System.Windows.Forms.Panel();
+            this.btn_restore = new System.Windows.Forms.Button();
             this.gb_wow_installation.SuspendLayout();
             this.gb_myaddons.SuspendLayout();
             this.SuspendLayout();
@@ -120,6 +121,7 @@
             // 
             // gb_myaddons
             // 
+            this.gb_myaddons.Controls.Add(this.btn_restore);
             this.gb_myaddons.Controls.Add(this.btn_add);
             this.gb_myaddons.Controls.Add(this.pnl_addonWrapper);
             this.gb_myaddons.Location = new System.Drawing.Point(12, 134);
@@ -147,6 +149,16 @@
             this.pnl_addonWrapper.Name = "pnl_addonWrapper";
             this.pnl_addonWrapper.Size = new System.Drawing.Size(1222, 745);
             this.pnl_addonWrapper.TabIndex = 0;
+            // 
+            // btn_restore
+            // 
+            this.btn_restore.Location = new System.Drawing.Point(124, 30);
+            this.btn_restore.Name = "btn_restore";
+            this.btn_restore.Size = new System.Drawing.Size(112, 34);
+            this.btn_restore.TabIndex = 4;
+            this.btn_restore.Text = "Restore";
+            this.btn_restore.UseVisualStyleBackColor = true;
+            this.btn_restore.Click += new System.EventHandler(this.btn_restore_Click);
             // 
             // Main
             // 
@@ -176,6 +188,7 @@
         private System.Windows.Forms.Label lbl_interface_static;
         private System.Windows.Forms.Label lbl_interface_dynamic;
         private System.Windows.Forms.Button btn_add;
+        private System.Windows.Forms.Button btn_restore;
     }
 }
 

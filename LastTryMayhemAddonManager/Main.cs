@@ -38,6 +38,22 @@ namespace LastTryMayhemAddonManager
 
         #region Private Methods
         #region Events
+        private void btn_restore_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo backup = AddonIO.GetBackupDirectory(this.GetActiveClient());
+
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = backup.FullName;
+            ofd.Filter = "Addon Backup File (*" + AddonIO.Extension + ")|*" + AddonIO.Extension + "|Zip File (*.zip)|*.zip";
+            ofd.CheckFileExists = true;
+            ofd.ReadOnlyChecked = true;
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show("Restore not yet implemented.");
+            }
+        }
+
         private void Column4_OnDelete(DirectoryInfo dir, TocData tocData)
         {
             DirectoryInfo client = this.GetActiveClient();
