@@ -40,10 +40,9 @@ namespace LastTryMayhemAddonManager
         #region Events
         private void Column4_OnDelete(DirectoryInfo dir, TocData tocData)
         {
-            MessageBox.Show("Backup and delete not yet implemented");
             AddonIO.Backup(dir);
 
-            //throw new NotImplementedException();
+            MessageBox.Show("Delete not yet implemented");
         }
 
         private void WowClientCheckedChanged(object sender, EventArgs e)
