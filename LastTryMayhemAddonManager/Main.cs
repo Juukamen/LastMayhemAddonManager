@@ -55,8 +55,9 @@ namespace LastTryMayhemAddonManager
                 DirectoryInfo parent = new DirectoryInfo(client.FullName + "\\Interface\\AddOns");
 
                 AddonIO.Restore(file, parent);
+                this.RefreshInstalledAddonListing();
 
-                MessageBox.Show("Refresh not yet implemented");
+                MessageBox.Show("\"" + file.Name + "\" has been restored", "Addon Restored", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -64,8 +65,16 @@ namespace LastTryMayhemAddonManager
         {
             DirectoryInfo client = this.GetActiveClient();
             AddonIO.Backup(dir, client);
+            dir.Delete(true);
 
-            MessageBox.Show("Delete/Refresh not yet implemented");
+            string name = dir.Name;
+            if(tocData.ContainsKey("Title"))
+            {
+                name = tocData["Title"];
+            }
+
+            this.RefreshInstalledAddonListing();
+            MessageBox.Show("\"" + name + "\" has been removed", "Addon Removed", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void WowClientCheckedChanged(object sender, EventArgs e)
@@ -95,6 +104,11 @@ namespace LastTryMayhemAddonManager
             }
         }
         #endregion //Events
+
+        private void RefreshInstalledAddonListing()
+        {
+            this.ListInstalledAddons(this.GetActiveClient());
+        }
 
         private DirectoryInfo GetActiveClient()
         {
