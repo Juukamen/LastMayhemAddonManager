@@ -38,6 +38,14 @@ namespace LastTryMayhemAddonManager
 
         #region Private Methods
         #region Events
+        private void Column4_OnDelete(DirectoryInfo dir, TocData tocData)
+        {
+            MessageBox.Show("Backup and delete not yet implemented");
+            AddonIO.Backup(dir);
+
+            //throw new NotImplementedException();
+        }
+
         private void WowClientCheckedChanged(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
@@ -65,6 +73,7 @@ namespace LastTryMayhemAddonManager
             }
         }
         #endregion //Events
+
         private void InitializeSources()
         {
             this.sources = new List<ISourceConfiguration>();
@@ -286,12 +295,6 @@ namespace LastTryMayhemAddonManager
                 yOffset = yStart;
                 xOffset += kvp.Value.Select(x => x.Width).Max();
             }
-        }
-
-        private void Column4_OnDelete(DirectoryInfo dir, TocData tocData)
-        {
-            MessageBox.Show("Backup and delete not yet implemented");
-            //throw new NotImplementedException();
         }
         #endregion //Private Methods
     }
